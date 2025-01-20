@@ -1,0 +1,30 @@
+PODS:
+  - Alamofire (5.10.2)
+  - KRActivityIndicatorView (3.0.8)
+  - KRProgressHUD (3.4.8):
+    - KRActivityIndicatorView (= 3.0.8)
+  - Moya (15.0.0):
+    - Moya/Core (= 15.0.0)
+  - Moya/Core (15.0.0):
+    - Alamofire (~> 5.0)
+
+DEPENDENCIES:
+  - KRProgressHUD
+  - Moya (~> 15.0)
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - KRActivityIndicatorView
+    - KRProgressHUD
+    - Moya
+
+SPEC CHECKSUMS:
+  Alamofire: 7193b3b92c74a07f85569e1a6c4f4237291e7496
+  KRActivityIndicatorView: c5c503bf56e54834382dd926b64ff47287ca0006
+  KRProgressHUD: d0fb4e72428d312eb6966e84c543ea58fb1efbc7
+  Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
+
+PODFILE CHECKSUM: e7523fbcd0a90d7aeaa20b4dc9e2d09900d50c9d
+
+COCOAPODS: 1.16.2

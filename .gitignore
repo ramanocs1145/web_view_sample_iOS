@@ -1,0 +1,52 @@
+# Ignore merge tool files
+*.orig
+
+# OS X
+.DS_Store
+
+# Xcode
+build/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+*.xccheckout
+profile
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+CodeCoverage/
+
+
+# Bundler
+.bundle
+
+#AppCode
+.idea/
+
+# Project
+*Config.plist
+*.generated.swift
+*ADBMobileConfig.json
+*FallbackServiceLocator.json
+*FallbackBCP.json
+/fastlane/report.xml
+*GoogleService-Info.plist
+/fastlane/test_output
+
+# Slather generated Code Coverage file for Sonar Qube
+sonarqube-generic-coverage.xml
+
+/tools/packages/xcfilelist-exec/.build/*
+!/tools/packages/xcfilelist-exec/.build/x86_64-apple-macosx/release
+.scannerwork/.sonar_lock
+.scannerwork/
+
+# VS Code
+.vscode

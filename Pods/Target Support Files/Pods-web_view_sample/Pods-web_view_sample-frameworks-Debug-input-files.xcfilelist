@@ -1,0 +1,5 @@
+${PODS_ROOT}/Target Support Files/Pods-web_view_sample/Pods-web_view_sample-frameworks.sh
+${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework
+${BUILT_PRODUCTS_DIR}/KRActivityIndicatorView/KRActivityIndicatorView.framework
+${BUILT_PRODUCTS_DIR}/KRProgressHUD/KRProgressHUD.framework
+${BUILT_PRODUCTS_DIR}/Moya/Moya.framework
