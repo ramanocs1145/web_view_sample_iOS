@@ -16,9 +16,9 @@ extension APIService: TargetType {
     var path: String {
         switch self {
         case .checkKeysSecret:
-            return "v1/check/keys-secret"
+            return (Configuration.shared.apiVersion ?? "") + "/check/keys-secret"
         case .createOrders:
-            return "v1//open/orders/create"
+            return (Configuration.shared.apiVersion ?? "") + "//open/orders/create"
         }
     }
     
@@ -49,20 +49,23 @@ extension APIService: TargetType {
     
     var headers: [String : String]? {
         switch self {
-        case .checkKeysSecret(_):
-            return ["Content-Type": "application/json"]
-            
-        case .createOrders(_):
+        case .checkKeysSecret(_), .createOrders(_):
             return [
-                "merchant-key": "test-JR11KGG26DM",
-                "merchant-secret": "sec-DC111UM26HQ",
+                "merchant-key": (Configuration.shared.merchantKey ?? ""),
+                "merchant-secret": (Configuration.shared.merchantSecret ?? ""),
                 "Content-Type": "application/json"
             ]
+//      case .createOrders(_):
+//            return [
+//                "merchant-key": "test-JR11KGG26DM",
+//                "merchant-secret": "sec-DC111UM26HQ",
+//                "Content-Type": "application/json"
+//            ]
         }
     }
     
     var baseURL: URL {
-        return URL(string: "https://nodeserver.payorc.com/api/")!
+        return URL(string: (Configuration.shared.baseURL ?? ""))! //"https://nodeserver.payorc.com/api/"
     }
     
     // Generic method to print any Encodable object as JSON

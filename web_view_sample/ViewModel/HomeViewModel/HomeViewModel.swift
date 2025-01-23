@@ -35,7 +35,7 @@ class HomeViewModel {
     
     // Private method to handle the checkKeysSecret API call
     private func checkKeysSecret(completion: @escaping (Result<Void, Error>) -> Void) {
-        let checkKeysSecretPostDataRepresent = CheckKeysSecretPostDataRepresent(merchantKey: "test-JR11KGG26DM", merchantSecret: "sec-DC111UM26HQ", env: "test")
+        let checkKeysSecretPostDataRepresent = CheckKeysSecretPostDataRepresent(merchantKey: (Configuration.shared.merchantKey ?? ""), merchantSecret: (Configuration.shared.merchantSecret ?? ""), env: (Configuration.shared.environment ?? ""))
         networkManager.request(.checkKeysSecret(checkKeysSecretPostDataRepresent: checkKeysSecretPostDataRepresent)) { [weak self] (result: Result<CheckKeysSecretSuccessResponse, Error>) in
             switch result {
             case .success(let checkKeysSecretSuccessResponse):
