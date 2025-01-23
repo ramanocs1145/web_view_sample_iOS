@@ -8,10 +8,13 @@ class WebViewController: UIViewController, WKNavigationDelegate {
     
     init(urlString: String) {
         self.urlString = urlString
-        let configuration = WKWebViewConfiguration()
-        self.webView = WKWebView(frame: .zero, configuration: configuration)
+        let webViewConfiguration = WKWebViewConfiguration()
+        let webpagePreferences = WKWebpagePreferences()
+        webpagePreferences.allowsContentJavaScript = true // Enable JavaScript
+        webViewConfiguration.defaultWebpagePreferences = webpagePreferences
+
+        self.webView = WKWebView(frame: .zero, configuration: webViewConfiguration)
         super.init(nibName: nil, bundle: nil)
-        self.webView.navigationDelegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -27,6 +30,7 @@ class WebViewController: UIViewController, WKNavigationDelegate {
     
     private func setupWebView() {
         webView.translatesAutoresizingMaskIntoConstraints = false
+        webView.navigationDelegate = self
         view.addSubview(webView)
         NSLayoutConstraint.activate([
             webView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -62,8 +66,37 @@ class WebViewController: UIViewController, WKNavigationDelegate {
     // WKNavigationDelegate methods
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         hideLoader()  // Hide the loader once the page finishes loading
+        
+        let script = """
+        var eventMethod = window.addEventListener ? "addEventListener": "attachEvent"; 
+        var eventer = window[eventMethod]; 
+        var messageEvent = eventMethod == "attachEvent" ? "onmessage": "message"; 
+
+        eventer(messageEvent, function(e) { 
+            console.log(JSON.parse(e.data)); // This will show all the result attributes 
+            var result = JSON.parse(e.data); 
+            console.log(result); // Check the entire result object for clarity
+
+            if (result['status'] === "SUCCESS") { 
+                alert("Transaction successful. Transaction ID: " + result['transaction_id']); 
+            } else if (result['status'] === "CANCELLED") { 
+                alert(result['remark']); 
+            } else if (result['status'] === "FAILED") { 
+                alert("Transaction failed. Transaction ID: " + result['transaction_id']); 
+            } 
+            alert("This is a test alert for CANCELLED status.");
+
+            document.getElementById('myModal').style.display = 'none';
+        }, false);
+        """
+        
+        webView.evaluateJavaScript(script) { (result, error) in
+            if let error = error {
+                debugPrint("Error injecting script: \(error.localizedDescription)")
+            }
+        }
     }
-    
+
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         hideLoader()  // Hide the loader in case of error
         showAlert(message: "Failed to load the page: \(error.localizedDescription)")
